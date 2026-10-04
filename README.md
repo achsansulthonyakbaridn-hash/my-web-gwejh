@@ -1,2 +1,1 @@
-# my-web-gwejh
-otw full ijo 
+in sha allah bakal full ijo yee
