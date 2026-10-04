@@ -1,1 +1,26 @@
-
+name: daily-commit
+on:
+  schedule:
+    - cron: "0 5 * * *"   # tiap hari 12:00 WIB
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Commit
+        env:
+          GH_USER: achsansulthonyakbaridn-hash
+          GH_EMAIL: achsansulthonyakbaridn@gmail.com
+        run: |
+          git config user.name "$GH_USER"
+          git config user.email "$GH_EMAIL"
+          n=$(( RANDOM % 6 + 1 ))
+          for i in $(seq $n); do
+            echo "$(date -u +%FT%TZ) #$i" >> activity.log
+            git add activity.log
+            git commit -m "daily update $(date -u +%F) #$i"
+          done
+          git push
